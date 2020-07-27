@@ -1,0 +1,162 @@
+---
+title: "PREDICTION PROJECT"
+author: "Vivek Singh"
+date: "27/7/2020"
+output: 
+  html_document:
+    keep_md : true
+---
+Please refer the readme file for more background info on this project
+
+The aim of this project is to predict the manner in which 6 participants do 
+various classes of exercise 
+
+After downloading the training and test data 
+
+The steps involved in the prediction method are as follows
+1)find near zero covariates 
+2)Remove NA observations for the remaining covariates
+3)Perform cross validation
+4)Build at least two models on the cross validted sets
+5)Predict using the model and the test set
+6)Use these predictions to generate an accuracy measure and out of sample error
+7)perform predictions on the Given datasets
+
+
+Step1
+
+Downloading required packages 
+ggplot2,caret,rpart,rpart.plot,random forest,corrplot
+
+```{r,echo=TRUE}
+
+library(caret)
+library(rpart)
+library(rpart.plot)
+library(randomForest)
+library(corrplot)
+
+```
+
+
+Step 2
+
+Downloading required data for training and test set
+
+```{r,echo=TRUE}
+UrlTrain <- "http://d396qusza40orc.cloudfront.net/predmachlearn/pml-training.csv"
+UrlTest  <- "http://d396qusza40orc.cloudfront.net/predmachlearn/pml-testing.csv"
+
+training<-read.csv(url(UrlTrain))
+testing<-read.csv(url(UrlTest))
+
+```
+
+
+Check for NA values and remove them
+
+```{r,echo=TRUE}
+Allna1<-sapply(training,function(x) mean(is.na(x)))>0.95
+Allna2<-sapply(testing,function(x) mean(is.na(x)))>0.95
+
+training<-training[,Allna1==FALSE]
+testing<-testing[,Allna2==FALSE]
+```
+
+Now we keep aside the testing data set and create a partition in training set for our model 
+building
+
+```{r,echo=TRUE}
+intrain<-createDataPartition(training$classe,p=0.7,list = FALSE)
+trainset<-training[intrain, ]
+testset<-training[-intrain,]
+dim(trainset)
+dim(testset)
+
+```
+
+Removing variables with near zero effect on the output
+
+```{r,echo=TRUE}
+nzv<-nearZeroVar(trainset)
+trainset<-trainset[,-nzv]
+testset<-testset[,-nzv]
+dim(trainset)
+dim(testset)
+
+```
+
+Since column 1-5 contain only identification parameters such as name and id we will also remove them
+
+```{r,echo=TRUE}
+trainset<-trainset[,-(1:5)]
+testset<-testset[,-(1:5)]
+dim(trainset)
+dim(testset)
+
+```
+
+Exploratory analysis
+
+```{r,echo=TRUE}
+plot(trainset$classe,col="orange", main="Levels of the variable classe", xlab="classe levels", ylab="Frequency")
+
+
+
+
+```
+
+The plot above shows that Level A is the most frequent classe. D appears to be the least frequent one.
+
+
+
+
+Step 3
+Building random forest with simple crossvalidation
+
+```{r,echo=TRUE}
+set.seed(111)
+controlRF<-trainControl(method = "cv",number = 3,verboseIter = FALSE)
+
+model1<-train(classe~.,method="rf",data = trainset,trControl=controlRF)
+model1$finalModel
+
+```
+
+```{r,echo=TRUE}
+model1$finalModel
+
+```
+
+Testing this model on testset data
+
+```{r,echo=TRUE}
+predictions1<-predict(model1,testset)
+conf1<-confusionMatrix(predictions1,testset$classe)
+conf1
+```
+
+Finding the out sample error in this case
+
+As you can see from the cofusion matrix the out sample error
+for classe A=1/1674=0.000597
+for classe B=8/1139=0.0070
+for Classe C=3/1026=0.0029
+for Classe D=2/964=0.002074
+for Classe E=2/1082=0.00184
+
+```{r,echo=TRUE}
+plot(conf1$table,col=conf1$byClass,main("Accuracy=0.998"))
+
+```
+
+Since Random Forest with cross validation gives a pretty high accuracy we will be using
+this model to predict the test data for the project quiz
+
+```{r,echo=TRUE}
+predictions2<-predict(model1,testing)
+predictions2
+```
+
+
+
