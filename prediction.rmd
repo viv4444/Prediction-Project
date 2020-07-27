@@ -1,7 +1,7 @@
 ---
 title: "PREDICTION PROJECT"
 author: "Vivek Singh"
-date: "7/27/2020"
+date: "27/7/2020"
 output: 
   html_document:
     keep_md : true

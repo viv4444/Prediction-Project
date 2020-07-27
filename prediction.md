@@ -1,7 +1,7 @@
 ---
 title: "PREDICTION PROJECT"
 author: "Vivek Singh"
-date: "7/27/2020"
+date: "27/7/2020"
 output: 
   html_document:
     keep_md : true
@@ -200,14 +200,14 @@ model1$finalModel
 ##                      Number of trees: 500
 ## No. of variables tried at each split: 27
 ## 
-##         OOB estimate of  error rate: 0.23%
+##         OOB estimate of  error rate: 0.24%
 ## Confusion matrix:
 ##      A    B    C    D    E  class.error
 ## A 3904    1    0    0    1 0.0005120328
-## B    8 2647    2    1    0 0.0041384500
-## C    0    4 2392    0    0 0.0016694491
-## D    0    0   11 2240    1 0.0053285968
-## E    0    0    0    3 2522 0.0011881188
+## B    7 2649    2    0    0 0.0033860045
+## C    0    5 2390    1    0 0.0025041736
+## D    0    0    9 2242    1 0.0044404973
+## E    0    0    0    6 2519 0.0023762376
 ```
 
 
@@ -223,14 +223,14 @@ model1$finalModel
 ##                      Number of trees: 500
 ## No. of variables tried at each split: 27
 ## 
-##         OOB estimate of  error rate: 0.23%
+##         OOB estimate of  error rate: 0.24%
 ## Confusion matrix:
 ##      A    B    C    D    E  class.error
 ## A 3904    1    0    0    1 0.0005120328
-## B    8 2647    2    1    0 0.0041384500
-## C    0    4 2392    0    0 0.0016694491
-## D    0    0   11 2240    1 0.0053285968
-## E    0    0    0    3 2522 0.0011881188
+## B    7 2649    2    0    0 0.0033860045
+## C    0    5 2390    1    0 0.0025041736
+## D    0    0    9 2242    1 0.0044404973
+## E    0    0    0    6 2519 0.0023762376
 ```
 
 Testing this model on testset data
@@ -247,34 +247,34 @@ conf1
 ## 
 ##           Reference
 ## Prediction    A    B    C    D    E
-##          A 1674    4    0    0    0
-##          B    0 1134    2    0    2
-##          C    0    1 1024    0    0
-##          D    0    0    0  964    2
-##          E    0    0    0    0 1078
+##          A 1674    2    0    0    0
+##          B    0 1137    3    0    0
+##          C    0    0 1023    3    0
+##          D    0    0    0  961    1
+##          E    0    0    0    0 1081
 ## 
 ## Overall Statistics
 ##                                           
-##                Accuracy : 0.9981          
-##                  95% CI : (0.9967, 0.9991)
+##                Accuracy : 0.9985          
+##                  95% CI : (0.9971, 0.9993)
 ##     No Information Rate : 0.2845          
 ##     P-Value [Acc > NIR] : < 2.2e-16       
 ##                                           
-##                   Kappa : 0.9976          
+##                   Kappa : 0.9981          
 ##                                           
 ##  Mcnemar's Test P-Value : NA              
 ## 
 ## Statistics by Class:
 ## 
 ##                      Class: A Class: B Class: C Class: D Class: E
-## Sensitivity            1.0000   0.9956   0.9981   1.0000   0.9963
-## Specificity            0.9991   0.9992   0.9998   0.9996   1.0000
-## Pos Pred Value         0.9976   0.9965   0.9990   0.9979   1.0000
-## Neg Pred Value         1.0000   0.9989   0.9996   1.0000   0.9992
+## Sensitivity            1.0000   0.9982   0.9971   0.9969   0.9991
+## Specificity            0.9995   0.9994   0.9994   0.9998   1.0000
+## Pos Pred Value         0.9988   0.9974   0.9971   0.9990   1.0000
+## Neg Pred Value         1.0000   0.9996   0.9994   0.9994   0.9998
 ## Prevalence             0.2845   0.1935   0.1743   0.1638   0.1839
-## Detection Rate         0.2845   0.1927   0.1740   0.1638   0.1832
-## Detection Prevalence   0.2851   0.1934   0.1742   0.1641   0.1832
-## Balanced Accuracy      0.9995   0.9974   0.9989   0.9998   0.9982
+## Detection Rate         0.2845   0.1932   0.1738   0.1633   0.1837
+## Detection Prevalence   0.2848   0.1937   0.1743   0.1635   0.1837
+## Balanced Accuracy      0.9998   0.9988   0.9982   0.9983   0.9995
 ```
 
 Finding the out sample error in this case
